@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Queue — Fire Safety in Hong Kong's Old Buildings</title>
+<style>
+  :root {
+    --ink:#231c17;          /* soot */
+    --paper:#f2ede5;        /* warm ash */
+    --accent:#c8501e;       /* ember */
+    --accent-soft:#e8b48f;
+    --rule:#ddd3c6;
+    --muted:#7a6f63;
+    --char:#1b1410;         /* charred */
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+         font-family:"Helvetica Neue", Arial, "PingFang SC", sans-serif; line-height:1.85; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 26px; }
+
+  /* masthead */
+  .masthead { border-bottom:1px solid var(--rule); padding:20px 0 12px; }
+  .masthead .wrap { display:flex; justify-content:space-between; align-items:baseline; }
+  .masthead .brand { font-size:12px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; }
+  .masthead .brand b { color:var(--accent); font-weight:700; }
+  .masthead .tag { font-size:12px; color:var(--muted); }
+
+  /* hero with photo */
+  .hero { position:relative; color:#f4ede4; overflow:hidden;
+          background:linear-gradient(160deg,#241a13 0%,#1b1410 55%,#120d0a 100%); }
+  .hero .photo { position:absolute; inset:0; background-size:cover; background-position:center;
+                 opacity:.42; filter:saturate(.85) contrast(1.05); }
+  .hero .scrim { position:absolute; inset:0;
+                 background:linear-gradient(180deg, rgba(20,13,9,.25) 0%, rgba(20,13,9,.72) 78%, rgba(18,13,10,.95) 100%); }
+  .hero .wrap { position:relative; padding:120px 26px 64px; }
+  .hero .kicker { font-size:13px; letter-spacing:2.5px; color:var(--accent-soft); font-weight:700; text-transform:uppercase; }
+  .hero h1 { font-family:Georgia,"Times New Roman",serif; font-size:54px; line-height:1.1; margin:16px 0 18px; font-weight:700; }
+  .hero h1 .em { color:var(--accent); }
+  .hero .standfirst { font-size:18px; color:#e3d8c9; max-width:600px; }
+  .hero .byline { margin-top:28px; font-size:12.5px; color:#a2937f; letter-spacing:.4px; }
+  .hero .photo-credit { position:absolute; right:14px; bottom:10px; font-size:11px; color:#8b7d6c; }
+
+  section { padding:52px 0 8px; }
+  .sec-label { display:flex; align-items:baseline; gap:14px; border-top:1px solid var(--rule); padding-top:14px; }
+  .sec-label .no { font-family:Georgia,serif; font-size:15px; color:var(--accent); font-weight:700; }
+  .sec-label .name { font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  h2 { font-family:Georgia,"Times New Roman",serif; font-size:30px; line-height:1.25; margin:20px 0 16px; }
+  p { margin:0 0 18px; }
+  .dropcap::first-letter { font-family:Georgia,serif; font-size:56px; line-height:1; float:left; padding:6px 10px 0 0; color:var(--accent); font-weight:700; }
+
+  blockquote.pull { margin:30px 0; padding:6px 0 6px 22px; border-left:3px solid var(--accent);
+    font-family:Georgia,serif; font-size:21px; line-height:1.5; color:#3a322a; font-style:italic; }
+
+  figure.photo { margin:26px 0; border:1px solid var(--rule); background:#e7ded1; }
+  figure.photo .img { height:300px; background-size:cover; background-position:center;
+    background-image:linear-gradient(150deg,#3a2c20,#241a12); }
+  figure.photo figcaption { font-size:12.5px; color:var(--muted); padding:10px 14px; border-top:1px solid var(--rule); }
+
+  /* stat list */
+  .stat { display:flex; gap:26px; padding:22px 0; border-top:1px solid var(--rule); align-items:baseline; }
+  .stat:last-of-type { border-bottom:1px solid var(--rule); }
+  .stat .v { font-family:Georgia,serif; font-size:38px; font-weight:700; min-width:190px; color:var(--ink); }
+  .stat .v .hot { color:var(--accent); }
+  .stat .v small { font-size:20px; }
+  .stat .d { font-size:15px; color:#55493d; }
+  .src { font-size:12.5px; color:var(--muted); margin-top:14px; }
+
+  /* ratio bars */
+  .ratio-block { margin-top:34px; }
+  .ratio { margin:22px 0; }
+  .ratio .lbl { font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:8px; }
+  .bar { display:flex; height:26px; background:#e4dacc; }
+  .bar .fill { background:var(--accent); }
+  .bar .fill.soot { background:var(--ink); }
+  .bar .fill.sliver { background:var(--accent); min-width:3px; }
+  .ratio .cap { display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin-top:6px; }
+  .ratio .cap b { color:var(--ink); }
+  .ratio-note { font-family:Georgia,serif; font-size:17px; color:#3a322a; border-left:3px solid var(--accent); padding-left:16px; margin-top:26px; }
+
+  /* action card */
+  .action-card { margin-top:30px; border:1px solid var(--rule); background:#ede7dc; padding:24px 26px; }
+  .action-card .ttl { font-family:Georgia,serif; font-size:19px; font-weight:700; margin-bottom:12px; }
+  .action-card ul { list-style:none; margin:0; padding:0; }
+  .action-card li { padding:10px 0; border-top:1px solid var(--rule); font-size:15px; }
+  .action-card li:first-child { border-top:none; }
+  .action-card a { color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent-soft); font-weight:600; }
+  .action-card a:hover { color:#8f3513; }
+  .action-card .ph { color:var(--muted); font-size:13.5px; }
+
+  /* self-check list */
+  .check-card { margin-top:30px; border-top:3px solid var(--ink); padding:22px 0 6px; }
+  .check-card .ttl { font-family:Georgia,serif; font-size:19px; font-weight:700; margin-bottom:4px; }
+  .check-card .sub { font-size:14px; color:var(--muted); margin-bottom:14px; }
+  .check-card ol { list-style:none; counter-reset:chk; margin:0; padding:0; }
+  .check-card ol li { counter-increment:chk; display:flex; gap:16px; padding:12px 0; border-top:1px solid var(--rule); font-size:15px; }
+  .check-card ol li::before { content:counter(chk); font-family:Georgia,serif; font-size:17px; font-weight:700; color:var(--accent); min-width:22px; }
+
+  /* timeline */
+  .timeline { margin:26px 0 6px; padding:0; list-style:none; }
+  .timeline li { position:relative; padding:0 0 22px 26px; border-left:1px solid var(--rule); }
+  .timeline li::before { content:""; position:absolute; left:-5px; top:8px; width:9px; height:9px;
+    background:var(--paper); border:2px solid var(--accent); border-radius:50%; }
+  .timeline .yr { font-family:Georgia,serif; font-weight:700; margin-right:8px; color:var(--accent); }
+
+  /* steps */
+  ol.steps { list-style:none; margin:24px 0; padding:0; counter-reset:step; }
+  ol.steps li { counter-increment:step; display:flex; gap:18px; padding:18px 0; border-top:1px solid var(--rule); }
+  ol.steps li::before { content:counter(step,decimal-leading-zero); font-family:Georgia,serif;
+    font-size:24px; color:var(--accent); font-weight:700; min-width:40px; }
+  ol.steps b { display:block; font-family:Georgia,serif; font-size:17px; margin-bottom:2px; }
+
+  ul.actions { padding-left:0; list-style:none; margin:20px 0; }
+  ul.actions li { padding:14px 0 14px 24px; border-top:1px solid var(--rule); position:relative; }
+  ul.actions li::before { content:"—"; position:absolute; left:0; color:var(--accent); }
+
+  .closing { margin:48px 0 0; padding:64px 0; background:var(--char); color:#f4ede4; }
+  .closing .line { font-family:Georgia,serif; font-size:28px; font-weight:700; line-height:1.4; }
+  .closing .line em { color:var(--accent); font-style:normal; }
+  .closing .sub { color:#b7a58f; margin-top:12px; font-size:15px; }
+
+  footer { border-top:1px solid var(--rule); padding:20px 0 60px; font-size:12.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <span class="brand">City <b>&amp;</b> Safety</span>
+    <span class="tag">A public explainer · Hong Kong</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="photo" style="background-image:url('photos/new-lucky-house-facade.jpg'), linear-gradient(150deg,#3a2c20,#1b1410);"></div>
+  <div class="scrim"></div>
+  <div class="wrap">
+    <div class="kicker">Fire Safety · Older Buildings</div>
+    <h1>The <span class="em">Queue</span></h1>
+    <p class="standfirst">More than ten thousand of Hong Kong's older buildings need fire-safety work. Public capacity covers a few dozen a year. So the real question is not whether the buildings are dangerous — it is who goes first.</p>
+    <div class="byline">An explainer for residents · Sources: Legislative Council papers, 2024</div>
+  </div>
+  <div class="photo-credit">New Lucky House, Jordan · Photo: FONO_25_RUOQWM_SAXM via Wikimedia Commons (CC0)</div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="no">01</span><span class="name">The Case</span></div>
+    <h2>A building everyone knew about</h2>
+    <p class="dropcap">In April 2024, a No. 3 alarm fire broke out at New Lucky House in Jordan. Five people died and forty were injured. The building was sixty years old, subdivided into flats and guesthouses — home to some of the city's most vulnerable residents.</p>
+    <p>Fire Safety Directions had been issued to the building <strong>sixteen years earlier</strong>. They were never complied with. When the fire came, the alarm system, the hose reels and the fire extinguishers all failed to work.</p>
+    <blockquote class="pull">The problem was not that nobody knew it was dangerous. It never reached the front of the queue.</blockquote>
+    <p>The queue is not an abstraction. According to the 2021 Population Census, <strong>87.9% of households in subdivided flats live in buildings aged 50 years or above</strong> — the people least able to escape a fire are the most likely to be living in a building that is still waiting.</p>
+    <figure class="photo">
+      <div class="img" style="background-image:url('photos/new-lucky-house-stairs.jpg'), linear-gradient(150deg,#3a2c20,#241a12);"></div>
+      <figcaption>The staircase of New Lucky House. In buildings of this type, one stairwell is the only escape route for hundreds of residents. (Photo: FONO_25_RUOQWM_SAXM via Wikimedia Commons, CC0)</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="no">02</span><span class="name">The Numbers</span></div>
+    <h2>The scale of the queue, in four figures</h2>
+    <div class="stat"><div class="v">14,000</div><div class="d">pre-1987 composite buildings regulated under the Fire Safety (Buildings) Ordinance (Cap. 572)</div></div>
+    <div class="stat"><div class="v">387,440</div><div class="d">Fire Safety Directions issued after joint inspections of 11,154 buildings by the Fire Services Department and the Buildings Department</div></div>
+    <div class="stat"><div class="v"><span class="hot">36.1<small>%</small></span></div><div class="d">of those directions complied with or discharged — nearly two-thirds of the required work remains undone</div></div>
+    <div class="stat"><div class="v"><span class="hot">20–60</span></div><div class="d">buildings per year that the Government can take on through works-in-default after the 2024 amendment</div></div>
+    <div class="ratio-block">
+      <div class="ratio">
+        <div class="lbl">Directions issued vs complied</div>
+        <div class="bar"><div class="fill" style="width:36.1%"></div></div>
+        <div class="cap"><span><b>36.1%</b> complied or discharged (139,927)</span><span>387,440 issued</span></div>
+      </div>
+      <div class="ratio">
+        <div class="lbl">Buildings in the queue vs one year of capacity</div>
+        <div class="bar"><div class="fill soot" style="width:100%"></div><div class="fill sliver"></div></div>
+        <div class="cap"><span><b>~14,000</b> target buildings</span><span><b>20–60</b> per year</span></div>
+      </div>
+      <div class="ratio-note">At this pace, working through the queue would take centuries. The order in which buildings are chosen matters as much as the capacity itself.</div>
+    </div>
+    <p class="src">Source: Legislative Council paper CB(2)1571/2024, figures as of 30 June 2024.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="no">03</span><span class="name">The Method</span></div>
+    <h2>How do you decide who goes first?</h2>
+    <p>When the pool is ten thousand buildings and the capacity is a few dozen, the order cannot be left to chance or to whoever complains loudest. During the amendment's scrutiny, the Government itself undertook to set up a scoring system to set priorities.</p>
+    <ol class="steps">
+      <li><div><b>Collect public data</b>Building age and use, inspection-notice compliance, unauthorised-works orders, the age profile of the neighbourhood.</div></li>
+      <li><div><b>Score the risk</b>Combine the factors into a score. A high score does not mean "this building will burn" — it means "this building is worth checking first".</div></li>
+      <li><div><b>Produce a priority list</b>The list informs the order of works-in-default, inspections and the installation of fire-detection devices.</div></li>
+    </ol>
+    <ul class="timeline">
+      <li><span class="yr">2007</span>The Fire Safety (Buildings) Ordinance requires pre-1987 buildings to upgrade to modern standards.</li>
+      <li><span class="yr">2024</span>An amendment empowers the Government to carry out works in default of owners and recover the costs — and to set priorities for doing so.</li>
+      <li><span class="yr">2025</span>The Fire Services Department pilots IoT fire detectors in 10 old buildings, with a possible roll-out to 3,600 — another queue that needs an order.</li>
+    </ul>
+    <p class="src">A note on limits: ranking tools are internal aids for professionals. Individual building scores should not be published — what belongs in public is policy, resources and self-help knowledge.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="no">04</span><span class="name">What You Can Do</span></div>
+    <h2>Four things within your power</h2>
+    <ul class="actions">
+      <li><strong>Keep escape routes clear.</strong> Uncluttered corridors, staircases and exits are the cheapest and most effective fire protection there is.</li>
+      <li><strong>Read your building's notices.</strong> If your building has received Fire Safety Directions, the owners' corporation is legally required to act — owners are entitled to ask about progress.</li>
+      <li><strong>Report blocked or altered escape routes.</strong> Contact the Fire Services Department or 1823, especially in subdivided buildings.</li>
+      <li><strong>Check on elderly residents.</strong> Older people in ageing districts are the least able to escape. One visit, one check, can change the outcome.</li>
+    </ul>
+    <div class="check-card">
+      <div class="ttl">A five-minute check you can do tonight</div>
+      <div class="sub">You do not need any equipment — just walk the route you would take in a fire.</div>
+      <ol>
+        <li>Walk from your flat to the street. Are the corridor, staircase and exit clear of clutter?</li>
+        <li>Do the smoke-lobby and staircase doors close by themselves — and is none of them wedged open or locked?</li>
+        <li>Are the exit signs lit and pointing the way you actually walked?</li>
+        <li>Is the hose reel and extinguisher cabinet intact, accessible and not used for storage?</li>
+        <li>If anything fails this list, tell your owners' corporation or management office — or report it to 1823.</li>
+      </ol>
+    </div>
+    <div class="action-card">
+      <div class="ttl">Check your own building — three official entry points</div>
+      <ul>
+        <li><a href="https://bravo.bd.gov.hk" target="_blank" rel="noopener">BRAVO · Buildings Department</a> — look up your building's records, approved plans and statutory orders online.</li>
+        <li><a href="https://www.hkfsd.gov.hk/eng/fire_protection/fs_bisc.html" target="_blank" rel="noopener">FSD Building Improvement Support Centre</a> — one-stop help for owners and occupiers who have received Fire Safety Directions. <span class="ph">Tel 2272 9112 · Mon–Sat 9:00–20:00</span></li>
+        <li><a href="https://www.1823.gov.hk" target="_blank" rel="noopener">1823</a> — report blocked or altered escape routes and damaged fire-service installations.</li>
+        <li><strong>Fire Safety Improvement Works Subsidy Scheme</strong> — the Government subsidises eligible owners for the required works; ask the Support Centre or call the URA Building Rehabilitation hotline. <span class="ph">Tel 3188 1188</span></li>
+      </ul>
+    </div>
+    <figure class="photo">
+      <div class="img" style="background-image:url('photos/fire-hose-reel.jpg'), linear-gradient(150deg,#3a2c20,#241a12);"></div>
+      <figcaption>A fire hose reel beside ageing electrical meters in an old building's common area — equipment like this must work on the one day it is needed. (Photo: FONO_25_RUOQWM_SAXM via Wikimedia Commons, CC0)</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="wrap">
+    <div class="line">Technology sets the order.<br><em>People make the decisions.</em></div>
+    <div class="sub">Ranking tools help limited resources reach the buildings that need them most. Every inspection and every project is still decided and carried out by professionals.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    This page was drafted with the assistance of an AI tool (Kimi, Moonshot AI) and fact-checked by a human editor against the cited Legislative Council papers. Photographs: New Lucky House, Jordan, January 2025 — FONO_25_RUOQWM_SAXM via Wikimedia Commons, CC0 (public domain). This is a public-education page and contains no risk scores or rankings of individual buildings.
+  </div>
+</footer>
+
+</body>
+</html>
